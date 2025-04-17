@@ -12,12 +12,14 @@ class TodoController extends Controller
 {
     public function index(){
         $todos = Todo::all();
-        return view('index', compact('todos'));
+        $categories = Category::all();
+        return view('index', compact('todos','categories'));
     }
 
     public function store(TodoRequest $request){
-        $task = $request -> only(['content']);
+        $task = $request -> only(['content','category_id']);
         Todo::create($task);
+
         return redirect('/')->with('message','Todoを作成しました');
     }
 
