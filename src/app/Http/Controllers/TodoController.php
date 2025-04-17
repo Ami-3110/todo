@@ -11,22 +11,22 @@ use App\Http\Requests\TodoRequest;
 class TodoController extends Controller
 {
     public function index(){
-        $todos = Todo::all();
+        $todos = Todo::with('category')->get();
         $categories = Category::all();
         return view('index', compact('todos','categories'));
     }
 
     public function store(TodoRequest $request){
         $task = $request -> only(['content','category_id']);
-        Todo::create($task);
-
+        Todo::create($task);         
         return redirect('/')->with('message','Todoを作成しました');
     }
+
+
 
     public function update(TodoRequest $request){
         $renew = $request -> only(['content']);
         Todo::find($request->id)->update($renew);
-
         return redirect('/')->with('message','Todoを更新しました');
     }
 
