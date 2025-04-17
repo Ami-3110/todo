@@ -70,6 +70,7 @@
             </div>
            <div class="update-form__item">
              <p class="update-form__item-p">{{ $todo->category['name'] }}</p>
+             <input type="hidden" name="category_id" value="{{ $todo['category_id'] }}" />
            </div>
             <div class="update-form__button">
               <button class="update-form__button-submit" type="submit">
