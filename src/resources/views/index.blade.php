@@ -33,13 +33,18 @@
       <button class="create-form__button-submit" type="submit">作成</button>
     </div>
   </form>
+
+
+
  <div class="section__title">
    <h2>Todo検索</h2>
  </div>
- <form class="search-form">
-   <div class="search-form__item">
-     <input class="search-form__item-input" type="text" />
-     <select class="search-form__item-select">
+ <form class="search-form" action="/todos/search" method="get">
+  @csrf
+  @method('search')
+  <div class="search-form__item">
+     <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}"/>
+     <select class="search-form__item-select" name="category_id">
        <option value="">カテゴリ</option>
       @foreach($categories as $category)
       <option value="{{ $category->id}}">{{ $category->name }}</option>
@@ -50,6 +55,9 @@
      <button class="search-form__button-submit" type="submit">検索</button>
    </div>
  </form>
+
+
+
   <div class="todo-table">
     <table class="todo-table__inner">
       <tr class="todo-table__row">
@@ -58,11 +66,11 @@
          <span class="todo-table__header-span">カテゴリ</span> 
        </th>
       </tr>
-      @foreach ($todos as $todo)
+      @foreach($todos as $todo)
       <tr class="todo-table__row">
         <td class="todo-table__item">
           <form class="update-form" action="/todos/update" method="post">
-            @method('PATCH') 
+            @method('patch') 
             @csrf
             <div class="update-form__item">
               <input class="update-form__item-input" type="text" name="content" value="{{ $todo['content'] }}" />

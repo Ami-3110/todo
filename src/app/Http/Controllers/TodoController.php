@@ -22,6 +22,15 @@ class TodoController extends Controller
         return redirect('/')->with('message','Todoを作成しました');
     }
 
+
+    public function search(Request $request){
+        $todos =Todo::with('category')->CategorySearch($request -> category_id) -> KeywordSearch($request -> keyword)->get();
+        $categories = Category::all();
+        return view('index', compact('todos', 'categories'));
+    }
+
+
+
     public function update(TodoRequest $request){
         $renew = $request -> only(['id','content','category_id']);
         Todo::find($request->id)->update($renew);
@@ -34,7 +43,9 @@ class TodoController extends Controller
         return redirect('/')->with('message','Todoを削除しました');
     }
 
-   
+    
+
+ 
 
     
 }
